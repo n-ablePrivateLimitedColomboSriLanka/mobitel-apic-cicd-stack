@@ -1,0 +1,7 @@
+version: '3.9'
+services:
+  dockerc:
+    image: mcr.microsoft.com/devcontainers/base:bullseye
+    command: sleep infinity
+    volumes:
+      - ../:/workspace:cached

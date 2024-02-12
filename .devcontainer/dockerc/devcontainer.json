@@ -1,0 +1,17 @@
+{
+	"name": "Docker client",
+	"dockerComposeFile": ["../docker-compose.yaml"],
+	"service": "dockerc",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"version": "latest",
+			"enableNonRootDocker": "true",
+			"moby": "false"
+		}
+	},
+	"shutdownAction": "none",
+	"workspaceFolder": "/workspace",
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	}
+}
