@@ -1,9 +1,10 @@
 version: "3"
+name: apic-cicd-stack
 
 services:
   jenkins:
     build: jenkins
-    image: ireshmm/jenkins:lts-jdk11-jsac
+    image: ireshmm/jenkins:lts-jdk17-jsac
     volumes:
       - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock:rw
@@ -12,28 +13,65 @@ services:
     ports:
       - "8080:8080"
     env_file:
-      - .env-vars
+       - .env
     group_add:
       - '999'
-    secrets:
-      - github-app-id
-      - github-app-privkey
-      - generic-webhook-token
     environment:
       TZ: "Asia/Colombo"
+  postgres:
+    image: postgres:12
+    volumes:
+      - bitbucket-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${BITBUCKET_DB_NAME}
+      POSTGRES_USER: ${BITBUCKET_DB_USER}
+      POSTGRES_PASSWORD: ${BITBUCKET_DB_PASSWORD}
+    networks:
+      - ci-network
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${BITBUCKET_DB_NAME}", "-U", "${BITBUCKET_DB_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  bitbucket:
+    image: atlassian/bitbucket-server:7.7.0
+    ports:
+      - 7990:7990
+      # - 7999:7999
+    volumes:
+      - bitbucket-data:/var/atlassian/application-data/bitbucket
+    environment:
+      JVM_MINIMUM_MEMORY: ${BITBUCKET_JVM_MINIMUM_MEMORY}
+      JVM_MAXIMUM_MEMORY: ${BITBUCKET_JVM_MAXIMUM_MEMORY}
+      SERVER_SECURE: 'false'
+      SERVER_SCHEME: http
+      SETUP_DISPLAYNAME: Bitbucket
+      SETUP_BASEURL: ${BITBUCKET_URL}
+      JDBC_DRIVER: org.postgresql.Driver
+      JDBC_USER: ${BITBUCKET_DB_USER}
+      JDBC_PASSWORD: ${BITBUCKET_DB_PASSWORD}
+      JDBC_URL: jdbc:postgresql://postgres:5432/${BITBUCKET_DB_NAME}
+    networks:
+      - ci-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7990/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 networks:
   ci-network:
     name: ci-network
 volumes:
-  certbot-certs:
-    external: true
-    name: certbot-certs
   jenkins-data:
-secrets:
-  github-app-id:
-    file: secrets/github-app-id
-  github-app-privkey:
-    file: secrets/github-app-privkey
-  generic-webhook-token:
-    file: secrets/generic-webhook-token
+    name: jenkins-data
+  bitbucket-data:
+  bitbucket-postgres:
