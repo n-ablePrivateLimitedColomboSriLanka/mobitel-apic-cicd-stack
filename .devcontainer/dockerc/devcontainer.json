@@ -22,7 +22,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"/jenkins-jack-1.2.1.vsix"
+				"/jenkins-jack-1.2.1.vsix",
+				"NicolasVuillamy.vscode-groovy-lint"
 			]
 		}
 	}

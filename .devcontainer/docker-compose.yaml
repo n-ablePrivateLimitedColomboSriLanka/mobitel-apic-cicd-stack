@@ -8,8 +8,14 @@ services:
       - ../:/workspace:cached
       - jenkins-data:/jenkins-data
       - /home/iresh/.ssh:/home/vscode/.ssh
+    networks:
+      - ci-network
 
 volumes:
   jenkins-data:
-    name: nable-ci-stack_jenkins-data
+    name: jenkins-data
+    external: true
+networks:
+  ci-network:
+    name: ci-network
     external: true
