@@ -11,7 +11,7 @@ def call(body) {
             skipDefaultCheckout(true)
         }
         environment {
-            BIBUCKET_BUILD_STATUS_FILE='bitbucket-build-status.json'
+            BIBUCKET_BUILD_STATUS_FILE = 'bitbucket-build-status.json'
         }
         parameters {
             string(name: 'gitRepositoryUrl', defaultValue: pipelineParams.gitRepositoryUrlDefaultValue)
@@ -42,7 +42,7 @@ def call(body) {
                     script {
                         isUpToDate = sh(script: "git merge-base --is-ancestor ${params.baseRef}" +
                                               " ${params.headRef}", returnStatus: true)
-                        error message: 'The head branch is not up to date with the base branch'
+                        if (isUpToDate != 0) { error 'The head branch is not up to date with the base branch' }
                     }
                     script {
                         bitBucketBuildStatus = [
