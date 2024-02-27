@@ -18,6 +18,7 @@ services:
       - '999'
     environment:
       TZ: "Asia/Colombo"
+    dns: 192.168.252.35
   postgres:
     image: postgres:12
     volumes:
@@ -35,12 +36,13 @@ services:
       retries: 3
       start_period: 60s
     restart: unless-stopped
+    dns: 192.168.252.35
 
   bitbucket:
     image: atlassian/bitbucket-server:7.7.0
     ports:
       - 7990:7990
-      # - 7999:7999
+      - 7999:7999
     volumes:
       - bitbucket-data:/var/atlassian/application-data/bitbucket
     environment:
@@ -66,6 +68,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    dns: 192.168.252.35
 
 networks:
   ci-network:
