@@ -1,1 +1,4 @@
 *.env
+jenkins/JenkinsJobDSL
+jenkins/JenkinsLibs
+jenkins/iresh-s-buildscripts

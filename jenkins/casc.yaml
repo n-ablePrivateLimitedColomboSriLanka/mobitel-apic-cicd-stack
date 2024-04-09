@@ -2,36 +2,26 @@ credentials:
   system:
     domainCredentials:
     - credentials:
-      - gitHubApp:
-          appID: ${readFile:/run/secrets/github-app-id}
-          id: "${GITHUB_APP_CRED_ID}"
-          privateKey: ${readFile:/run/secrets/github-app-privkey}
       - usernamePassword:
-          description: "nexus-credentials"
-          id: "nexus-credentials"
-          password: ${readFile:/run/secrets/nexus-jenkins-user-password}
+          id: "BitBucketCred"
+          username: "admin"
+          password: "admin123"
           scope: GLOBAL
-          username: ${readFile:/run/secrets/nexus-jenkins-user-id}
       - string:
-          id: "generic_webhook_token"
+          id: "APICDevEnvCred"
+          secret: "1085543e-38f1-4ffd-a9ad-56ddc3dcffef"
           scope: GLOBAL
-          secret: ${readFile:/run/secrets/generic-webhook-token}
+      - usernamePassword:
+          id: "APICDevUnitTestCred"
+          username: "apiadm-dev"
+          password: "admin123"
+          scope: GLOBAL
 jenkins:
   globalNodeProperties:
     - envVars:
         env:
-        - key: "GITHUB_ORG_NAME"
-          value: "${GITHUB_ORG_NAME}"
-        - key: "GITHUB_APP_CRED_ID"
-          value: "${GITHUB_APP_CRED_ID}"
-        - key: "JOB_CREATOR_DSL_REPO"
-          value: "${JOB_CREATOR_DSL_REPO}"
-        - key: "SHARED_LIB_REPO"
-          value: "${SHARED_LIB_REPO}"
-        - key: "BUILD_SCRIPTS_REPO"
-          value: "${BUILD_SCRIPTS_REPO}"
-        - key: "ACE_SHARED_LIB_INDEX_URL"
-          value: "${ACE_SHARED_LIB_INDEX_URL}"
+        - key: "API_JOB_CREATOR_DSL_REPO"
+          value: "${API_JOB_CREATOR_DSL_REPO}"
         - key: "TRUNK_BRANCH_NAME"
           value: "${TRUNK_BRANCH_NAME}"
   clouds:
@@ -72,112 +62,20 @@ unclassified:
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
     url: "${JENKINS_URL}"
-  gitHubPluginConfig:
-    configs:
-    - name: "GitHub"
-      apiUrl: "https://api.github.com"
-  globalConfigFiles:
-    configs:
-    - mavenSettings:
-        comment: "User settings"
-        id: "maven3-settings"
-        isReplaceAll: true
-        name: "Maven3Settings"
-        providerId: "org.jenkinsci.plugins.configfiles.maven.MavenSettingsConfig"
-        serverCredentialMappings:
-        - credentialsId: "nexus-credentials"
-          serverId: "nexus"
-        - credentialsId: "${GITHUB_APP_CRED_ID}"
-          serverId: "github"
-        content: |
-            <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                                  https://maven.apache.org/xsd/settings-1.0.0.xsd">
-              <mirrors>
-                <mirror>
-                  <id>maven-default-http-blocker</id>
-                  <mirrorOf>dummy</mirrorOf>
-                  <name>Dummy mirror to override default blocking mirror that blocks http</name>
-                  <url>http://0.0.0.0/</url>
-                  <blocked>true</blocked>
-                </mirror>
-              </mirrors>
-              <profiles>
-                <profile>
-                  <id>default</id>
-                  <repositories>
-                    <repository>
-                      <id>nexus</id>
-                      <name>maven-java-releases-nexus</name>
-                      <url>http://nexus/repository/maven-java-releases/</url>
-                    </repository>
-                  </repositories>
-                </profile>
-              </profiles>
-              <activeProfiles>
-                <activeProfile>default</activeProfile>
-              </activeProfiles>
-            </settings>
-
-    - json:
-        comment: "Maven ace artfiact repositories"
-        id: "maven-ace-artifact-repositories"
-        name: "maven-ace-artifact-repositories"
-        content: |
-          {
-            "repositories": [
-              {
-                "url": "http://nexus/repository/maven-ace-releases/",
-                "id": "nexus"
-              }
-            ]
-          }
-    - json:
-        comment: "Maven java artfiact repositories"
-        id: "maven-java-artifact-repositories"
-        name: "maven-java-artifact-repositories"
-        content: |
-          {
-            "repositories": [
-              {
-                "url": "http://nexus/repository/maven-java-releases/",
-                "id": "nexus"
-              }
-            ]
-          }
   globalLibraries:
     libraries:
-    - defaultVersion: "master"
+    - defaultVersion: '1.0.0'
       implicit: true
-      name: "build_lib"
+      name: "JenkinsLibsAPIC"
       retriever:
-        modernSCM:
-          scm:
-            github:
-              configuredByUrl: true
-              credentialsId: "${GITHUB_APP_CRED_ID}"
-              repoOwner: "${GITHUB_ORG_NAME}"
-              repository: "JenkinsLibs"
-              repositoryUrl: "${SHARED_LIB_REPO}"
-              traits:
-              - gitHubBranchDiscovery:
-                  strategyId: 1
+        http:
+          credentialsId: "BitBucketCred"
+          httpURL: "http://lib-zipper:5000/zipper/JenkinsLibsAPIC"
+          preemptiveAuth: false
 tool:
   git:
     installations:
     - home: "git"
       name: "Default"
-  maven:
-    installations:
-    - name: "maven3"
-      properties:
-      - installSource:
-          installers:
-          - maven:
-              id: "3.8.6"
-  mavenGlobalConfig:
-    globalSettingsProvider: "standard"
-    settingsProvider: "standard"
 jobs:
-  - file: /usr/share/jenkins/ref/initial-jobs/initial-jobs.groovy
+  - file: /usr/share/jenkins/ref/initial-jobs/initial-jobs-apic.groovy

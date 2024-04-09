@@ -24,3 +24,5 @@ view-job-filters
 docker-plugin
 docker-workflow
 junit
+permissive-script-security
+workflow-cps-global-lib-http

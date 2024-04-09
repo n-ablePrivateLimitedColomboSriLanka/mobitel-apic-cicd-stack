@@ -7,12 +7,13 @@
 			"moby": true,
 			"installDockerBuildx": true,
 			"version": "latest",
-			"dockerDashComposeVersion": "none"
+			"dockerDashComposeVersion": "latest"
 		},
 		"ghcr.io/devcontainers/features/github-cli:1": {
 			"installDirectlyFromGitHubRelease": true,
 			"version": "latest"
-		}
+		},
+		"ghcr.io/devcontainers/features/terraform:1": {}
 	},
 	"shutdownAction": "none",
 	"workspaceFolder": "/workspace",
@@ -23,7 +24,8 @@
 		"vscode": {
 			"extensions": [
 				"/jenkins-jack-1.2.1.vsix",
-				"NicolasVuillamy.vscode-groovy-lint"
+				"NicolasVuillamy.vscode-groovy-lint",
+				"GitHub.copilot"
 			]
 		}
 	}

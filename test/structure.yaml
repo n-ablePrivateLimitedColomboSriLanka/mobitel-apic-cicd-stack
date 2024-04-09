@@ -1,0 +1,29 @@
+---
+orgs:
+    - name: OrgA
+      catalogs:
+        - name: CatalogP
+          products:
+            - name: ProductP0
+              apis:
+                - name: APIP00
+                - name: APIP01
+                - name: APIP02
+                - name: APIP03
+            - name: ProductP01
+            - name: ProductP02
+            - name: ProductP03
+        - name: CatalogQ
+          products:
+            - name: ProductQ00
+            - name: ProductQ01
+    - name: OrgB
+        - name: CatalogX
+          products:
+            - name: ProductX00
+        - name: CatalogY
+          products:
+            - name: ProductY00
+            - name: ProductY01
+            - name: ProductY02
+            - name: ProductY03

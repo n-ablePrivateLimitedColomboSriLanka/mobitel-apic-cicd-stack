@@ -1,0 +1,16 @@
+[submodule "apic-ci-scripts"]
+	path = modules/apic-ci-scripts
+	url = https://github.com/n-ablePrivateLimitedColomboSriLanka/apic-ci-scripts.git
+	branch = master
+[submodule "apic-job-creator"]
+	path = modules/apic-job-creator
+	url = https://github.com/n-ablePrivateLimitedColomboSriLanka/apic-job-creator.git
+	branch = master
+[submodule "apic-jenkins-lib"]
+	path = modules/apic-jenkins-lib
+	url = https://github.com/n-ablePrivateLimitedColomboSriLanka/apic-jenkins-lib.git
+	branch = master
+[submodule "apic-toolkit-docker"]
+	path = modules/apic-toolkit-docker
+	url = https://github.com/n-ablePrivateLimitedColomboSriLanka/apic-toolkit-docker.git
+	branch = master

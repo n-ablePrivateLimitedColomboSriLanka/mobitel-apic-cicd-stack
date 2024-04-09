@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 services:
   dockerc:
     build: dockerc
@@ -6,12 +6,32 @@ services:
     command: sleep infinity
     volumes:
       - ../:/workspace:cached
-      - jenkins-data:/jenkins-data
+      # - jenkins-data:/jenkins-data
       - /home/iresh/.ssh/id_rsa:/home/vscode/.ssh/id_rsa
       - /home/iresh/.ssh/id_rsa.pub:/home/vscode/.ssh/id_rsa.pub
+      - /var/run/docker.sock:/var/run/docker.sock:rw
     networks:
       - ci-network
-
+    dns:
+      - 192.168.252.35
+  lib-zipper:
+    build: zipper
+    image: zipper:latest
+    volumes: 
+      - ../jenkins/shared-libs:/zipees
+    networks:
+      - ci-network
+    dns:
+      - 192.168.252.35
+  workspace-zipper:
+    build: zipper
+    image: zipper:latest
+    volumes:
+      - ../jenkins:/zipees
+    networks:
+      - ci-network
+    dns:
+      - 192.168.252.35
 volumes:
   jenkins-data:
     name: jenkins-data
