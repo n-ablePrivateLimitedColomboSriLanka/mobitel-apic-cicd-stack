@@ -18,7 +18,7 @@ services:
     build: zipper
     image: zipper:latest
     volumes: 
-      - ../jenkins/shared-libs:/zipees
+      - ../modules:/zipees
     networks:
       - ci-network
     dns:

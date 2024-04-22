@@ -66,11 +66,11 @@ unclassified:
     libraries:
     - defaultVersion: '1.0.0'
       implicit: true
-      name: "JenkinsLibsAPIC"
+      name: "apic_jenkins_lib"
       retriever:
         http:
           credentialsId: "BitBucketCred"
-          httpURL: "http://lib-zipper:5000/zipper/JenkinsLibsAPIC"
+          httpURL: "http://lib-zipper:5000/zipper/apic-jenkins-lib"
           preemptiveAuth: false
 tool:
   git:
