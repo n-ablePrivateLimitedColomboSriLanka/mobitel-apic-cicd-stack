@@ -19,6 +19,7 @@ services:
     image: zipper:latest
     volumes: 
       - ../modules:/zipees
+      - ./zipper/zipper.py:/app/zipper.py
     networks:
       - ci-network
     dns:

@@ -5,7 +5,7 @@ credentials:
       - usernamePassword:
           id: "BitBucketCred"
           username: "admin"
-          password: "admin123"
+          password: ""
           scope: GLOBAL
       - string:
           id: "APICDevEnvCred"
@@ -13,8 +13,8 @@ credentials:
           scope: GLOBAL
       - usernamePassword:
           id: "APICDevUnitTestCred"
-          username: "apiadm-dev"
-          password: "admin123"
+          username: ""
+          password: ""
           scope: GLOBAL
 jenkins:
   globalNodeProperties:

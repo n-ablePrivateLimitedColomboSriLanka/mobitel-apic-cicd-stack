@@ -2,3 +2,4 @@
 jenkins/JenkinsJobDSL
 jenkins/JenkinsLibs
 jenkins/iresh-s-buildscripts
+ephemeral_files

@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Stock
-  x-ibm-name: stock
+  x-ibm-name: stock_api
   version: 1.0.0
 schemes:
   - https

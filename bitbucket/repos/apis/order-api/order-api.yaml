@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Order
-  x-ibm-name: ibm-sample-order-api
+  x-ibm-name: order_api
   version: 1.0.0
   description: View and track your orders and deliveries.
   termsOfService: 'This API is provided as a sample with no associated guarantees.  '
@@ -225,7 +225,7 @@ paths:
     parameters:
       - name: orderNumber
         required: true
-        in: path
+        in: query
         type: string
         description: >-
           Order number to lookup - you should find this in your confirmation
