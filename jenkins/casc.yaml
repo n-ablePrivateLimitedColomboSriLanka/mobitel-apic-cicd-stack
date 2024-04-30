@@ -8,8 +8,12 @@ credentials:
           password: ""
           scope: GLOBAL
       - string:
-          id: "APICDevEnvCred"
-          secret: "1085543e-38f1-4ffd-a9ad-56ddc3dcffef"
+          id: "${APIC_DEV_ENV_CREDENTIAL_ID}"
+          secret: ""
+          scope: GLOBAL
+      - string:
+          id: "${APIC_SIT_ENV_CREDENTIAL_ID}"
+          secret: ""
           scope: GLOBAL
       - usernamePassword:
           id: "APICDevUnitTestCred"
@@ -20,10 +24,60 @@ jenkins:
   globalNodeProperties:
     - envVars:
         env:
-        - key: "API_JOB_CREATOR_DSL_REPO"
-          value: "${API_JOB_CREATOR_DSL_REPO}"
-        - key: "TRUNK_BRANCH_NAME"
-          value: "${TRUNK_BRANCH_NAME}"
+        - key: "APIC_JOB_DSL_REPO_URL"
+          value: "${APIC_JOB_DSL_REPO_URL}"
+        - key: "APIC_API_INDEX_REPO_URL"
+          value: "${APIC_API_INDEX_REPO_URL}"
+        - key: "APIC_API_INDEX_REPO_BRANCH"
+          value: "${APIC_API_INDEX_REPO_BRANCH}"
+        - key: "APIC_PRODUCT_INDEX_REPO_URL"
+          value: "${APIC_PRODUCT_INDEX_REPO_URL}"
+        - key: "APIC_PRODUCT_INDEX_REPO_BRANCH"
+          value: "${APIC_PRODUCT_INDEX_REPO_BRANCH}"
+        - key: "APIC_TRUNK_BRANCH_NAME"
+          value: "${APIC_TRUNK_BRANCH_NAME}"
+        # Bitbucket server
+        - key: "BITBUCKET_BASE_URL"
+          value: "${BITBUCKET_BASE_URL}"
+        - key: "BITBUCKET_CREDENTIAL_ID"
+          value: "${BITBUCKET_CREDENTIAL_ID}"
+        # APIC UNITTEST environment
+        - key: "APIC_UNIT_TEST_ENV_API_URL"
+          value: "${APIC_UNIT_TEST_ENV_API_URL}"
+        - key: "APIC_UNIT_TEST_ENV_PORG_ID"
+          value: "${APIC_UNIT_TEST_ENV_PORG_ID}"
+        - key: "APIC_UNIT_TEST_ENV_CREDENTIAL_ID"
+          value: "${APIC_UNIT_TEST_ENV_CREDENTIAL_ID}"
+        # APIC DEV environment
+        - key: "APIC_DEV_ENV_API_URL"
+          value: "${APIC_DEV_ENV_API_URL}"
+        - key: "APIC_DEV_ENV_PORG_ID"
+          value: "${APIC_DEV_ENV_PORG_ID}"
+        - key: "APIC_DEV_ENV_CREDENTIAL_ID"
+          value: "${APIC_DEV_ENV_CREDENTIAL_ID}"
+        # APIC SIT environment
+        - key: "APIC_SIT_ENV_API_URL"
+          value: "${APIC_SIT_ENV_API_URL}"
+        - key: "APIC_SIT_ENV_PORG_ID"
+          value: "${APIC_SIT_ENV_PORG_ID}"
+        - key: "APIC_SIT_ENV_CATALOG_NAME"
+          value: "${APIC_SIT_ENV_CATALOG_NAME}"
+        - key: "APIC_SIT_ENV_CREDENTIAL_ID"
+          value: "${APIC_SIT_ENV_CREDENTIAL_ID}"
+        # APIC STG environment
+        - key: "APIC_STAGING_ENV_API_URL"
+          value: "${APIC_STAGING_ENV_API_URL}"
+        - key: "APIC_STAGING_ENV_PORG_ID"
+          value: "${APIC_STAGING_ENV_PORG_ID}"
+        - key: "APIC_STAGING_ENV_CRENDENTIAL_ID"
+          value: "${APIC_STAGING_ENV_CRENDENTIAL_ID}"
+        # APIC PROD environment
+        - key: "APIC_PROD_ENV_API_URL"
+          value: "${APIC_PROD_ENV_API_URL}"
+        - key: "APIC_PROD_ENV_PORG_ID"
+          value: "${APIC_PROD_ENV_PORG_ID}"
+        - key: "APIC_PROD_ENV_CREDENTIAL_ID"
+          value: "${APIC_PROD_ENV_CREDENTIAL_ID}"
   clouds:
     - docker:
         name: "docker"

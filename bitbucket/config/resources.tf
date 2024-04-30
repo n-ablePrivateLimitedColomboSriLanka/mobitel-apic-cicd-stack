@@ -48,9 +48,9 @@ resource "bitbucketserver_repository_webhook" "api_repositories_webhooks" {
   project     = bitbucketserver_project.apis.key
   repository  = bitbucketserver_repository.api_repsitories[each.key].slug
   name        = "push-notification"
-  webhook_url = "https://www.google.com/"
+  webhook_url = "http://jenkins:8080/generic-webhook-trigger/invoke?token=abc123"
   secret      = "abc"
-  events      = ["repo:refs_changed"]
+  events      = ["repo:refs_changed", "pr:opened", "pr:from_ref_updated"]
   active      = true
 }
 
@@ -65,9 +65,9 @@ resource "bitbucketserver_repository_webhook" "product_repositories_webhooks" {
   project     = bitbucketserver_project.products.key
   repository  = bitbucketserver_repository.product_repositories[each.key].slug
   name        = "push-notification"
-  webhook_url = "https://www.google.com/"
+  webhook_url = "http://jenkins:8080/generic-webhook-trigger/invoke?token=abc123"
   secret      = "abc"
-  events      = ["repo:refs_changed"]
+  events      = ["repo:refs_changed", "pr:opened", "pr:from_ref_updated"]
   active      = true
 }
 

@@ -6,14 +6,17 @@ services:
     command: sleep infinity
     volumes:
       - ../:/workspace:cached
-      # - jenkins-data:/jenkins-data
+      - jenkins-data:/jenkins-data
       - /home/iresh/.ssh/id_rsa:/home/vscode/.ssh/id_rsa
       - /home/iresh/.ssh/id_rsa.pub:/home/vscode/.ssh/id_rsa.pub
       - /var/run/docker.sock:/var/run/docker.sock:rw
+      - ../modules/apic-ci-scripts:/apic-ci-scripts
     networks:
       - ci-network
     dns:
       - 192.168.252.35
+    group_add:
+      - '999'
   lib-zipper:
     build: zipper
     image: zipper:latest
@@ -28,7 +31,7 @@ services:
     build: zipper
     image: zipper:latest
     volumes:
-      - ../jenkins:/zipees
+      - ../modules:/zipees
     networks:
       - ci-network
     dns:

@@ -1,6 +1,6 @@
 /* groovylint-disable CompileStatic, DuplicateStringLiteral, VariableName, VariableTypeRequired */
 /* groovylint-disable-next-line UnusedVariable */
-def api_job_creator_repo_url = API_JOB_CREATOR_DSL_REPO
+def api_job_creator_repo_url = APIC_JOB_DSL_REPO_URL
 
 def views = [
     ['name': 'Meta', 'description': 'All Meta Jobs', 'label_regex':'.*labels:.*meta.*'],
@@ -34,7 +34,7 @@ pipelineJob('APIJobCreator') {
     description('labels:meta')
     parameters {
         stringParam('repository_clone_url', '', 'Clone URL of a specific repository to be processed')
-        stringParam('trunk_branch', TRUNK_BRANCH_NAME, 'The trunk branch to which feature branches are merged to')
+        stringParam('trunk_branch', APIC_TRUNK_BRANCH_NAME, 'The trunk branch to which feature branches are merged to')
     }
     definition {
         // cpsScm {

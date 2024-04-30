@@ -7,3 +7,5 @@ RUN mkdir -p /home/vscode/.ssh && chown -R vscode:vscode /home/vscode/
 RUN git config --global credential.helper store
 RUN git clone --depth 1 https://github.com/git/git.git /tmp/git
 RUN cd /tmp/git/contrib/subtree && sudo make install
+RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
+    chmod +x /usr/bin/yq
